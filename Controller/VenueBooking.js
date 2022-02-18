@@ -7,10 +7,12 @@ exports.getAvailableSlots = async (req, res) => {
 
   let slots = ["MorningSlot", "AfternoonSlot", "EveningSlot"];
   try {
+    // checking givendate should be greater then current date
     if (bookingDate > moment(new Date()).add(1, "days")) {
       const bookings = await venueBookingModel.find({ bookingDate });
       // .setOptions({ explain: "executionStats" });
 
+      //filtering out available slots
       let arr = [];
       for (let slot of slots) {
         let count = 0;

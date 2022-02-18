@@ -12,6 +12,7 @@ app.use(express.json());
 app.use("/venueBooking", venueBookingRouter);
 app.use("/user", userRouter);
 
+//DB Connection
 db_Connection();
 
 app.listen(process.env.PORT, (req, res) => {
