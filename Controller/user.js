@@ -40,9 +40,7 @@ exports.logOut = async (req, res) => {
 
 exports.fetchSlot = async (req, res) => {
   try {
-    const data = await venueBookingModel
-      .find({ customer: req.user._id })
-      .populate("customer");
+    const data = await venueBookingModel.find({ customer: req.user._id });
     res.status(200).send(data);
   } catch (err) {
     res.status(500).send("Something went wrong");

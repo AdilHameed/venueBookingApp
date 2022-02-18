@@ -1,9 +1,6 @@
 const venueBookingModel = require("../Model/VenueBooking.js");
 const moment = require("moment");
 
-const timeElapsed = Date.now();
-const today = new Date(timeElapsed);
-
 exports.getAvailableSlots = async (req, res) => {
   const { date } = req.query;
   const bookingDate = moment(new Date(date)).add(1, "days");
@@ -27,7 +24,7 @@ exports.getAvailableSlots = async (req, res) => {
           arr.push(slot);
         }
       }
-      res.status(200).json({ message: "available slots", data: bookings });
+      res.status(200).json({ message: "available slots", data: arr });
     } else {
       res.status(406).json({ message: "Please enter valid date" });
     }
@@ -49,7 +46,7 @@ exports.bookAvailableSlot = async (req, res) => {
         bookingDate,
         name,
         slot: reqSlot,
-        customer: req.user,
+        customer: req.user._id,
       });
       await newBooking.save();
       res.status(201).send(newBooking);
