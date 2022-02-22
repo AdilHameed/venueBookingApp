@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../Model/user.js");
 
-const auth = async (req, res, next) => {
+const user = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -16,10 +16,22 @@ const auth = async (req, res, next) => {
 
     req.token = token;
     req.user = user;
+
     next();
   } catch (e) {
     res.status(401).send({ error: "Please authenticate." });
   }
 };
 
-module.exports = auth;
+const owner = () => {
+  return (req, res, next) => {
+    if (req.user.owner !== true) {
+      return next(
+        res.status(403).send({ error: "You are not auhthorize to access it" })
+      );
+    }
+
+    next();
+  };
+};
+module.exports = { user, owner };

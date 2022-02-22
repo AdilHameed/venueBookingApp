@@ -20,6 +20,7 @@ const userSchema = new Schema(
       },
     },
     password: { type: String, required: true, minlength: 8 },
+    owner: { type: Boolean, required: true, default: false },
     tokens: [
       {
         token: { type: String, required: true },
@@ -49,7 +50,8 @@ userSchema.statics.findByCredentials = async (email, password) => {
   const user = await userModel.findOne({ email });
   if (!user) throw new Error("Unable to login");
 
-  const isMatch = bcrypt.compare(password, user.password);
+  const isMatch = await bcrypt.compare(password, user.password);
+
   if (!isMatch) throw new Error("Password is incorrect");
   return user;
 };

@@ -1,5 +1,4 @@
 const userModel = require("../Model/user.js");
-const venueBookingModel = require("../Model/VenueBooking.js");
 
 exports.signUp = async (req, res) => {
   const newUser = new userModel(req.body);
@@ -34,15 +33,6 @@ exports.logOut = async (req, res) => {
 
     res.status(200).send("User logged out");
   } catch (e) {
-    res.status(500).send("Something went wrong");
-  }
-};
-
-exports.fetchSlot = async (req, res) => {
-  try {
-    const data = await venueBookingModel.find({ customer: req.user._id });
-    res.status(200).send(data);
-  } catch (err) {
     res.status(500).send("Something went wrong");
   }
 };

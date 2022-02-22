@@ -3,14 +3,16 @@ const express = require("express");
 const db_Connection = require("./utils/db.js");
 
 const venueBookingRouter = require("./Router/VenueBooking.js");
+const venueRouter = require("./Router/venue.js");
 const userRouter = require("./Router/user.js");
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/venueBooking", venueBookingRouter);
 app.use("/user", userRouter);
+app.use("/venue", venueRouter);
+app.use("/venueBooking", venueBookingRouter);
 
 //DB Connection
 db_Connection();

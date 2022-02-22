@@ -6,7 +6,6 @@ const userRouter = express.Router();
 
 userRouter.post("/signup", user.signUp);
 userRouter.post("/login", user.logIn);
-userRouter.get("/fetchBookedSlot", auth, user.fetchSlot);
-userRouter.post("/logout", auth, user.logOut);
+userRouter.post("/logout", auth.user, user.logOut);
 
 module.exports = userRouter;
