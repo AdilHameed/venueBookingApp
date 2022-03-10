@@ -3,7 +3,7 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
@@ -40,6 +40,7 @@ userSchema.virtual("venueBookings", {
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
+  // eslint-disable-next-line no-underscore-dangle
   const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
   user.tokens.push({ token });
   await user.save();
@@ -47,6 +48,7 @@ userSchema.methods.generateAuthToken = async function () {
 };
 
 userSchema.statics.findByCredentials = async (email, password) => {
+  // eslint-disable-next-line no-use-before-define
   const user = await userModel.findOne({ email });
   if (!user) throw new Error("Unable to login");
 

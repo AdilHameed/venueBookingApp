@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const venueBookingSchema = new Schema(
   {
     bookingDate: {
       type: Date,
-      min: [moment(new Date()).add(1, "days"), "Please enter valid date"],
+      min: [moment(new Date()), "Please enter valid date"],
       index: { background: true },
     },
     slot: {

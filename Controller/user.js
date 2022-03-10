@@ -1,11 +1,11 @@
-const userModel = require("../Model/user.js");
+const UserModel = require("../Model/user");
 
 exports.signUp = async (req, res) => {
-  const newUser = new userModel(req.body);
+  const newUser = new UserModel(req.body);
   try {
-    await newUser.save();
+    const user = await newUser.save();
     const token = await newUser.generateAuthToken();
-    res.status(201).json({ newUser, token });
+    res.status(201).send({ user, token });
   } catch (err) {
     res.status(400).json(err.message);
   }
@@ -13,12 +13,12 @@ exports.signUp = async (req, res) => {
 
 exports.logIn = async (req, res) => {
   try {
-    const user = await userModel.findByCredentials(
+    const user = await UserModel.findByCredentials(
       req.body.email,
       req.body.password
     );
     const token = await user.generateAuthToken();
-    res.status(200).json({ user, token });
+    res.status(200).send({ user, token });
   } catch (err) {
     res.status(400).json(err.message);
   }
@@ -26,9 +26,10 @@ exports.logIn = async (req, res) => {
 
 exports.logOut = async (req, res) => {
   try {
-    req.user.tokens = req.user.tokens.filter((token) => {
-      return token.token !== req.token;
-    });
+    req.user.tokens = req.user.tokens.filter(
+      (token) => token.token !== req.token
+    );
+
     await req.user.save();
 
     res.status(200).send("User logged out");

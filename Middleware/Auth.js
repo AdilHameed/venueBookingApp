@@ -1,11 +1,13 @@
 const jwt = require("jsonwebtoken");
-const User = require("../Model/user.js");
+const User = require("../Model/user");
 
 const user = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // eslint-disable-next-line no-shadow
     const user = await User.findOne({
+      // eslint-disable-next-line no-underscore-dangle
       _id: decoded._id,
       "tokens.token": token,
     });
@@ -23,15 +25,14 @@ const user = async (req, res, next) => {
   }
 };
 
-const owner = () => {
-  return (req, res, next) => {
-    if (req.user.owner !== true) {
-      return next(
-        res.status(403).send({ error: "You are not auhthorize to access it" })
-      );
-    }
+// eslint-disable-next-line consistent-return
+const owner = () => (req, res, next) => {
+  if (req.user.owner !== true) {
+    return next(
+      res.status(403).send({ error: "You are not auhthorize to access it" })
+    );
+  }
 
-    next();
-  };
+  next();
 };
 module.exports = { user, owner };

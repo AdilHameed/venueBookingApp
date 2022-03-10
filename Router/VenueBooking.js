@@ -1,25 +1,25 @@
 const express = require("express");
-const VenueBooking = require("../Controller/VenueBooking.js");
-const auth = require("../Middleware/Auth.js");
+const VenueBooking = require("../Controller/VenueBooking");
+const auth = require("../Middleware/Auth");
 
 const venueBookingRouter = express.Router();
 
-//GET MOTHOD ROUTES
+// GET MOTHOD ROUTES
 
-//for fetching available slots in particular venue with perticular date
+// for fetching available slots in particular venue with perticular date
 venueBookingRouter.get(
   "/venue/:id/availableSlots",
   VenueBooking.getAvailableSlots
 );
 
-//for fetching slots booked by particular user
+// for fetching slots booked by particular user
 venueBookingRouter.get(
   "/fetchBookedSlotByUser",
   auth.user,
   VenueBooking.fetchSlotsByUser
 );
 
-//fetching slots booked in particular venue
+// fetching slots booked in particular venue
 venueBookingRouter.get(
   "/fetchBookedSlotByVenue/:id",
   auth.user,
@@ -27,18 +27,18 @@ venueBookingRouter.get(
   VenueBooking.fetchSlotsByVenue
 );
 
-//POST METHOD ROUTES
+// POST METHOD ROUTES
 
-//for booking slots in particular venue by user
+// for booking slots in particular venue by user
 venueBookingRouter.post(
   "/venue/:id/bookSlot",
   auth.user,
   VenueBooking.bookAvailableSlot
 );
 
-//PATCH METHOD ROUTES
+// PATCH METHOD ROUTES
 
-//update bookings by id
+// update bookings by id
 venueBookingRouter.patch(
   "/bookSlot/:id",
   auth.user,
@@ -53,7 +53,7 @@ venueBookingRouter.patch(
   VenueBooking.updateBookingConfirmation
 );
 
-//rejection bh by owner of venue
+// rejection  by owner of venue
 venueBookingRouter.patch(
   "/bookSlot/:id/rejection",
   auth.user,
@@ -61,8 +61,8 @@ venueBookingRouter.patch(
   VenueBooking.updateBookingRejection
 );
 
-//DELETE METHOD ROUTES
-//deleting booked slot by user
+// DELETE METHOD ROUTES
+// deleting booked slot by user
 venueBookingRouter.delete(
   "/bookSlot/:id",
   auth.user,

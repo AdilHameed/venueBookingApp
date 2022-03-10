@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const venueSchema = new Schema(
   {
@@ -12,6 +13,10 @@ const venueSchema = new Schema(
     ratings: {
       type: Number,
       default: 0,
+    },
+    image: {
+      type: String,
+      required: [true, "Please add venue image"],
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
