@@ -10,6 +10,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/vend",(req, res)=>{
+   res.send("deployed successfuly")
+})
 app.use("/user", userRouter);
 app.use("/venue", venueRouter);
 app.use("/venueBooking", venueBookingRouter);
