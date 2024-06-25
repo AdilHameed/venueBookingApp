@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const moment = require("moment");
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const venueBookingSchema = new Schema(
   {
-    name: { type: String, required: [true, "Please enter venue name"] },
     bookingDate: {
       type: Date,
-      min: [moment(new Date()).add(1, "days"), "Please enter valid date"],
+      min: [moment(new Date()), "Please enter valid date"],
       index: { background: true },
     },
     slot: {
@@ -15,10 +15,19 @@ const venueBookingSchema = new Schema(
       enum: ["MorningSlot", "AfternoonSlot", "EveningSlot"],
       required: [true, "Please provide slot name"],
     },
+
+    isRequested: { type: Boolean, default: true },
+    isConfirmed: { type: Boolean, default: false },
+
     customer: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
+    },
+    venue: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Venue",
     },
   },
   {

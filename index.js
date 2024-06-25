@@ -1,20 +1,24 @@
 require("dotenv").config();
 const express = require("express");
-const db_Connection = require("./utils/db.js");
-
-const venueBookingRouter = require("./Router/VenueBooking.js");
-const userRouter = require("./Router/user.js");
+const cors = require("cors");
+const venueBookingRouter = require("./Router/VenueBooking");
+const venueRouter = require("./Router/venue");
+const userRouter = require("./Router/user");
+const dbConnection = require("./utils/db");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
-
-app.use("/venueBooking", venueBookingRouter);
 app.use("/user", userRouter);
+app.use("/venue", venueRouter);
+app.use("/venueBooking", venueBookingRouter);
 
-//DB Connection
-db_Connection();
+// DB Connection
+dbConnection();
 
-app.listen(process.env.PORT, (req, res) => {
+// eslint-disable-next-line no-undef
+app.listen(process.env.PORT, () => {
+  // eslint-disable-next-line no-undef
   console.log(`server is listening on ${process.env.PORT}`);
 });
