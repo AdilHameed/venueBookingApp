@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: "./env/.env" });
 const express = require("express");
 const cors = require("cors");
 const venueBookingRouter = require("./Router/VenueBooking");
@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/vend",(req, res)=>{
-   res.send("deployed successfuly")
+   res.send("deployed successfuly vend")
 })
 app.use("/user", userRouter);
 app.use("/venue", venueRouter);

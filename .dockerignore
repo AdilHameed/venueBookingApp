@@ -1,0 +1,6 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+# Remove or comment out the .env line if it exists
+# .env
