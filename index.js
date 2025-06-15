@@ -10,18 +10,21 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/vend",(req, res)=>{
+
+app.use("/api/vend",(req, res)=>{
    res.send("deployed successfuly vend")
 })
-app.use("/user", userRouter);
-app.use("/venue", venueRouter);
-app.use("/venueBooking", venueBookingRouter);
+app.use("/api/user", userRouter);
+app.use("/api/venue", venueRouter);
+app.use("/api/venueBooking", venueBookingRouter);
+app.get("/api/health",(req, res)=>{
+  res.set('Cache-Control', 'no-store'); // prevent 304
+  res.status(200).send('running successfully- pipeline');
+})
 
 // DB Connection
 dbConnection();
 
-// eslint-disable-next-line no-undef
-app.listen(process.env.PORT, () => {
-  // eslint-disable-next-line no-undef
-  console.log(`server is listening on ${process.env.PORT}`);
+app.listen(process.env.PORT, '0.0.0.0', () => {
+  console.log(`Server running on http://0.0.0.0:${process.env.PORT}`);
 });
